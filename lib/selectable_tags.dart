@@ -33,7 +33,7 @@ class SelectableTags extends StatefulWidget {
       this.onPressed,
       this.popupMenuBuilder,
       this.popupMenuOnSelected,
-        this.activeTagSelectable = false,
+        this.inactiveTagSelectable = true,
       Key key})
       : assert(tags != null),
         super(key: key);
@@ -110,7 +110,7 @@ class SelectableTags extends StatefulWidget {
   final PopupMenuOnSelected popupMenuOnSelected;
 
   /// Defines if only active tags can be selected
-  final bool activeTagSelectable;
+  final bool inactiveTagSelectable;
 
   @override
   _SelectableTagsState createState() => _SelectableTagsState();
@@ -319,11 +319,7 @@ class _SelectableTagsState extends State<SelectableTags> {
                     softWrap: false,
                     style: _textStyle(tag),
                   ),
-            onPressed: () {
-
-              if (widget.activeTagSelectable && tag.active == false) {
-                return;
-              }
+            onPressed: (!widget.inactiveTagSelectable && tag.active == false) ? null : () {
               if (widget.singleItem) _singleItem();
               setState(() {
                 (widget.singleItem)
