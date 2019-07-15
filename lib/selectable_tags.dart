@@ -123,8 +123,6 @@ class _SelectableTagsState extends State<SelectableTags> {
   // Position for popup menu
   Offset _tapPosition;
 
-  List<Tag> _tags = [];
-
   double _width = 0;
   double _initFontSize = 14;
   double _initMargin = 3;
@@ -135,8 +133,6 @@ class _SelectableTagsState extends State<SelectableTags> {
   void initState() {
     super.initState();
     _getWidthContext();
-
-    _tags = widget.tags;
   }
 
   //get the current width of the container
@@ -190,7 +186,7 @@ class _SelectableTagsState extends State<SelectableTags> {
 
     //double factor = 8*(widget.fontSize.clamp(7, 32)/15);
 
-    int tagsLength = _tags.length;
+    int tagsLength = widget.tags.length;
     int rowsLength = (tagsLength / widget.columns).ceil();
     double fontSize = widget.fontSize ?? _initFontSize;
 
@@ -217,8 +213,8 @@ class _SelectableTagsState extends State<SelectableTags> {
       if (end >= tagsLength) end -= end - tagsLength;
 
       for (int j = start; j < end; j++) {
-        if (!widget.symmetry && _tags.isNotEmpty) {
-          Tag tag = _tags[j % tagsLength];
+        if (!widget.symmetry && widget.tags.isNotEmpty) {
+          Tag tag = widget.tags[j % tagsLength];
 
           //for tags with a string less than 2, or if there is an icon, the width is too small so i apply a slightly larger font size
           TextSize txtSize = TextSize(
@@ -262,7 +258,7 @@ class _SelectableTagsState extends State<SelectableTags> {
   }
 
   Widget _buildField({int index, double width}) {
-    Tag tag = _tags[index];
+    Tag tag = widget.tags[index];
 
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
 
@@ -383,7 +379,7 @@ class _SelectableTagsState extends State<SelectableTags> {
 
   /// Single item selection (same Radiobutton group HTML)
   void _singleItem() {
-    _tags.where((tg) => tg.active).forEach((tg) => tg.active = false);
+    widget.tags.where((tg) => tg.active).forEach((tg) => tg.active = false);
   }
 
   ///Container width divided by the number of columns when symmetry is active
