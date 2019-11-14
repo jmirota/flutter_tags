@@ -1,5 +1,9 @@
 ## [0.3.2] - 2019-06-20.
 
+* Colors has to be set in Tag constructor.
+
+## [0.3.2] - 2019-06-20.
+
 * Issue #14 and #13 fixed.
 * Added `customData` field in Tag Class.
 

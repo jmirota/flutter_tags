@@ -11,30 +11,28 @@ typedef void PopupMenuOnSelected(int id, Tag tag);
 class SelectableTags extends StatefulWidget {
   SelectableTags(
       {@required this.tags,
-      this.columns = 4,
-      this.height,
-      this.borderRadius,
-      this.borderSide,
-      this.boxShadow,
-      this.symmetry = false,
-      this.singleItem = false,
-      this.margin,
-      this.padding,
-      this.alignment,
-      this.offset,
-      this.fontSize = 14,
-      this.textStyle,
-      this.textOverflow,
-      this.textColor,
-      this.textActiveColor,
-      this.color,
-      this.activeColor,
-      this.backgroundContainer,
-      this.onPressed,
-      this.popupMenuBuilder,
-      this.popupMenuOnSelected,
-      this.inactiveTagSelectable = true,
-      Key key})
+        this.columns = 4,
+        this.height,
+        this.borderRadius,
+        this.borderSide,
+        this.boxShadow,
+        this.symmetry = false,
+        this.singleItem = false,
+        this.margin,
+        this.padding,
+        this.alignment,
+        this.offset,
+        this.fontSize = 14,
+        this.textStyle,
+        this.textOverflow,
+        this.textColor,
+        this.textActiveColor,
+        this.backgroundContainer,
+        this.onPressed,
+        this.popupMenuBuilder,
+        this.popupMenuOnSelected,
+        this.inactiveTagSelectable = true,
+        Key key})
       : assert(tags != null),
         super(key: key);
 
@@ -88,12 +86,6 @@ class SelectableTags extends StatefulWidget {
 
   /// color of the [Tag] text activated
   final Color textActiveColor;
-
-  /// background color [Tag]
-  final Color color;
-
-  /// background color [Tag] activated
-  final Color activeColor;
 
   /// background color container
   final Color backgroundContainer;
@@ -177,11 +169,11 @@ class _SelectableTagsState extends State<SelectableTags> {
 
     //margin of the tag
     double margin =
-        (widget.margin != null) ? widget.margin.horizontal : _initMargin * 2;
+    (widget.margin != null) ? widget.margin.horizontal : _initMargin * 2;
 
     //padding of the tag
     double padding =
-        widget.padding != null ? widget.padding.horizontal : _initPadding * 2;
+    widget.padding != null ? widget.padding.horizontal : _initPadding * 2;
     padding = padding * (widget.fontSize.clamp(8, 20) / 14);
 
     //double factor = 8*(widget.fontSize.clamp(7, 32)/15);
@@ -220,7 +212,7 @@ class _SelectableTagsState extends State<SelectableTags> {
           TextSize txtSize = TextSize(
               txt: tag.title,
               fontSize:
-                  fontSize * (tag.length < 2 || tag.icon != null ? 1.4 : 1));
+              fontSize * (tag.length < 2 || tag.icon != null ? 1.4 : 1));
 
           // Total width of the tag
           double txtWidth = txtSize.get().width + margin + padding;
@@ -278,43 +270,36 @@ class _SelectableTagsState extends State<SelectableTags> {
                     offset: Offset(0, 1))
               ],
           borderRadius:
-              widget.borderRadius ?? BorderRadius.circular(_initBorderRadius),
-          color: tag.active
-              ? (tag.activeColor ?? widget.activeColor ?? Colors.blueGrey)
-              : (tag.color ?? widget.color ?? Colors.white),
+          widget.borderRadius ?? BorderRadius.circular(_initBorderRadius),
+          color: tag.active ? tag.activeColor : tag.color,
         ),
         child: OutlineButton(
             padding: (widget.padding ??
-                    EdgeInsets.symmetric(horizontal: _initPadding)) *
+                EdgeInsets.symmetric(horizontal: _initPadding)) *
                 (widget.fontSize.clamp(8, 20) / 14),
             color: tag.active
-                ? (tag.activeColor ?? widget.activeColor ?? Colors.blueGrey)
-                : (tag.color ?? widget.color ?? Colors.white),
+                ? tag.activeColor : tag.color,
             highlightColor: Colors.transparent,
-            highlightedBorderColor:
-                tag.activeColor ?? widget.activeColor ?? Colors.blueGrey,
+            highlightedBorderColor: tag.activeColor,
             //disabledTextColor: Colors.red,
             borderSide: widget.borderSide ??
-                BorderSide(
-                    color: (tag.activeColor ??
-                        widget.activeColor ??
-                        Colors.blueGrey)),
+                BorderSide(color: tag.activeColor),
             child: (tag.icon != null)
                 ? FittedBox(
-                    child: Icon(
-                      tag.icon,
-                      size: widget.fontSize,
-                      color: tag.active
-                          ? (widget.textActiveColor ?? Colors.white)
-                          : (widget.textColor ?? Colors.black),
-                    ),
-                  )
+              child: Icon(
+                tag.icon,
+                size: widget.fontSize,
+                color: tag.active
+                    ? (widget.textActiveColor ?? Colors.white)
+                    : (widget.textColor ?? Colors.black),
+              ),
+            )
                 : Text(
-                    tag.title,
-                    overflow: widget.textOverflow ?? TextOverflow.fade,
-                    softWrap: false,
-                    style: _textStyle(tag),
-                  ),
+              tag.title,
+              overflow: widget.textOverflow ?? TextOverflow.fade,
+              softWrap: false,
+              style: _textStyle(tag),
+            ),
             onPressed: (!widget.inactiveTagSelectable && tag.active == false) ? null : () {
               if (widget.singleItem) _singleItem();
 
@@ -337,15 +322,15 @@ class _SelectableTagsState extends State<SelectableTags> {
           },
           onLongPress: () {
             showMenu(
-                    semanticLabel: tag.title,
-                    items: widget.popupMenuBuilder(tag) ?? [],
-                    context: context,
-                    position: RelativeRect.fromRect(
-                        _tapPosition & Size(40, 40),
-                        Offset.zero &
-                            overlay
-                                .size) // & RelativeRect.fromLTRB(65.0, 40.0, 0.0, 0.0),
-                    )
+                semanticLabel: tag.title,
+                items: widget.popupMenuBuilder(tag) ?? [],
+                context: context,
+                position: RelativeRect.fromRect(
+                    _tapPosition & Size(40, 40),
+                    Offset.zero &
+                    overlay
+                        .size) // & RelativeRect.fromLTRB(65.0, 40.0, 0.0, 0.0),
+            )
                 .then((value) {
               if (widget.popupMenuOnSelected != null)
                 widget.popupMenuOnSelected(value, tag);
@@ -353,9 +338,9 @@ class _SelectableTagsState extends State<SelectableTags> {
           },
           child: widget.popupMenuBuilder == null
               ? Tooltip(
-                  message: tag.title.toString(),
-                  child: container,
-                )
+            message: tag.title.toString(),
+            child: container,
+          )
               : container,
         ));
   }
@@ -400,10 +385,14 @@ class _SelectableTagsState extends State<SelectableTags> {
 class Tag {
   Tag(
       {this.id,
-      @required this.title,
-      this.icon,
-      this.active = true,
-      this.customData}) {
+        @required this.title,
+        @required this.color,
+        @required this.activeColor,
+        @required this.selectedBorderColor,
+        this.icon,
+        this.active = true,
+        this.selected = false,
+        this.customData}) {
     //When an icon is set, the size is 2. it seemed the most appropriate
     this.length = (icon != null) ? 2 : TextSize.utf8Length(title);
   }
@@ -411,9 +400,11 @@ class Tag {
   final String id;
   final IconData icon;
   final String title;
-  Color color;
-  Color activeColor;
+  final Color color;
+  final Color activeColor;
+  final Color selectedBorderColor;
   bool active;
+  bool selected;
   int length;
   dynamic customData;
 

@@ -333,7 +333,7 @@ class _MyHomePageState extends State<MyHomePage>
                                     Text(" Reset"),
                                   ],
                                 ),
-                                enabled: tag.activeColor != null,
+                                enabled: tag.color != null,
                               ),
                             ];
                           },
@@ -351,12 +351,12 @@ class _MyHomePageState extends State<MyHomePage>
                               case 3:
                                 _randomColors();
                                 setState(() {
-                                  tag.activeColor = _color;
+                                  //tag.color = _color;
                                 });
                                 break;
                               case 4:
                                 setState(() {
-                                  tag.activeColor = null;
+                                  //tag.color = null;
                                 });
                             }
                           },
