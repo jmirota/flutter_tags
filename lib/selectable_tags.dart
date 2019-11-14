@@ -277,8 +277,7 @@ class _SelectableTagsState extends State<SelectableTags> {
             padding: (widget.padding ??
                 EdgeInsets.symmetric(horizontal: _initPadding)) *
                 (widget.fontSize.clamp(8, 20) / 14),
-            color: tag.active
-                ? tag.activeColor : tag.color,
+            color: tag.selected ? (tag.selectedColor ?? Colors.white) : (tag.active ? tag.activeColor : tag.color),
             highlightColor: Colors.transparent,
             highlightedBorderColor: tag.activeColor,
             //disabledTextColor: Colors.red,
@@ -388,7 +387,7 @@ class Tag {
         @required this.title,
         @required this.color,
         @required this.activeColor,
-        @required this.selectedBorderColor,
+        this.selectedColor,
         this.icon,
         this.active = true,
         this.selected = false,
@@ -402,7 +401,7 @@ class Tag {
   final String title;
   final Color color;
   final Color activeColor;
-  final Color selectedBorderColor;
+  final Color selectedColor;
   bool active;
   bool selected;
   int length;

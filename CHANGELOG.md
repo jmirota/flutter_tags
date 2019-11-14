@@ -1,4 +1,8 @@
-## [0.3.2] - 2019-06-20.
+## [0.3.3] - 2019-11-14.
+
+* Introduces selected color.
+
+## [0.3.3] - 2019-11-14.
 
 * Colors has to be set in Tag constructor.
 
