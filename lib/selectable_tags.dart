@@ -271,7 +271,7 @@ class _SelectableTagsState extends State<SelectableTags> {
               ],
           borderRadius:
           widget.borderRadius ?? BorderRadius.circular(_initBorderRadius),
-          color: tag.active ? tag.activeColor : tag.color,
+          color: tag.selected ? (tag.selectedColor ?? Colors.white) : (tag.active ? tag.activeColor : tag.color),
         ),
         child: OutlineButton(
             padding: (widget.padding ??
